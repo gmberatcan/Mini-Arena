@@ -22,6 +22,7 @@ public class MoveEnemy : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        _health = enemyStats.health;
     }
 
     // Update is called once per frame
@@ -71,5 +72,17 @@ public class MoveEnemy : MonoBehaviour
             player.TakeDamage(enemyStats.damage);
             demageTimer = 0;
         }
+    }
+    void isDead()
+    {
+        if(_health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void TakeBulletDemage(float damage)
+    {
+        _health -= damage;
+        isDead();
     }
 }

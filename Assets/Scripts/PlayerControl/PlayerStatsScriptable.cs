@@ -4,5 +4,4 @@ using UnityEngine;
 public class PlayerStatsScriptable : ScriptableObject
 {
     public float health;
-    public float damage;
 }
