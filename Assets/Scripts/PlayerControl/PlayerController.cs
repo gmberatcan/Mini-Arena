@@ -1,11 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]private float speed=10;
     Rigidbody rb;
+    [SerializeField] private PlayerStatsScriptable playerStats;
+    private float Health;
+    public float _health
+    {
+        get { return Health; }
+        set { Health = value; }
+    }
+    [SerializeField] private TextMeshProUGUI healthText;
     private IState currentState;
     public bool isMoving = false;
     void Start()
@@ -13,6 +22,8 @@ public class PlayerController : MonoBehaviour
         rb= GetComponent<Rigidbody>();
         currentState = new IdleState();
         currentState.EnterState(this);
+        Health = playerStats.health;
+        healthText.text = "Health: " + Health;
     }
     public void ChangeState(IState newState)
     {
@@ -25,6 +36,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         CheckMovementInput();
+        healthText.text = "Health: " + Health;
     }
     private void FixedUpdate()
     {
@@ -59,5 +71,10 @@ public class PlayerController : MonoBehaviour
         }
         Vector3 MoveDirection=new Vector3 (horizontalInput, 0,verticalInput).normalized;
         rb.linearVelocity = new Vector3(MoveDirection.x * speed, 0, MoveDirection.z * speed);
+    }
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+        Debug.Log("Player took damage: " + damage + ", Current Health: " + Health);
     }
 }

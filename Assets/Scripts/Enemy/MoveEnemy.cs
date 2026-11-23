@@ -5,6 +5,14 @@ using UnityEngine.UIElements;
 public class MoveEnemy : MonoBehaviour
 {
     [SerializeField] private EnemyStats enemyStats;
+    private float Health;
+    public float _health
+    {
+        get { return Health; }
+        set { Health = value; }
+    }
+    private float demageTimer=0;
+    PlayerController player;
     Rigidbody enemyRb;
     public Transform target;
     void Awake()
@@ -19,7 +27,7 @@ public class MoveEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        TakeDemage();
     }
     private void FixedUpdate()
     {
@@ -38,6 +46,30 @@ public class MoveEnemy : MonoBehaviour
         {
             Debug.Log("Target is null");
             return;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            player = collision.gameObject.GetComponent<PlayerController>();
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            player = null;
+        }
+    }
+    private void TakeDemage()
+    {
+        if (player == null) return;
+        demageTimer += Time.deltaTime;
+        if (demageTimer >= enemyStats.demageInterval)
+        {
+            player.TakeDamage(enemyStats.damage);
+            demageTimer = 0;
         }
     }
 }
