@@ -6,6 +6,11 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]private float speed=10;
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
     Rigidbody rb;
     [SerializeField] private PlayerStatsScriptable playerStats;
     private float Health;
@@ -16,6 +21,10 @@ public class PlayerController : MonoBehaviour
     }
     [SerializeField] private TextMeshProUGUI healthText;
     private IState currentState;
+    public IState _currentState
+    {
+        get { return currentState; }
+    }
     public bool isMoving = false;
     void Start()
     {

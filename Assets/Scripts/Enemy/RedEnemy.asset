@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RedEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   speed: 3.5
-  health: 200
+  health: 100
   damage: 5
   demageInterval: 1.2
