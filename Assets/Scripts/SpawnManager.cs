@@ -5,10 +5,33 @@ public class SpawnManager : MonoBehaviour
 {
     //z=6,-15, 14,-14 olmayacak aralıklar
     [SerializeField] private GameObject[] EnemyPrefabs;
-    [SerializeField] private float spawnTime = 5f;
     [SerializeField] private GameObject[] BuffPrefabs;
+    [SerializeField] private int[] BuffRatios={ 40,20,40 };
     private bool firstSpawn = true;
-    private float buffTime = 8f;
+    private float minEnemySpawnTime = 6f;
+    public float _minEnemySpawnTime
+    {
+        get { return minEnemySpawnTime; }
+        set { minEnemySpawnTime=value; }
+    }
+    private float maxEnemySpawnTime = 9f;
+    public float _maxEnemySpawnTime
+    {
+        get { return maxEnemySpawnTime; }
+        set { maxEnemySpawnTime = value; }
+    }
+    private float minBuffSpawnTime = 12f;
+    public float _minBuffSpawnTime
+    {
+        get { return minBuffSpawnTime; }
+        set { minBuffSpawnTime = value; }
+    }
+    private float maxBuffSpawnTime = 18f;
+    public float _maxBuffSpawnTime
+    {
+        get { return maxBuffSpawnTime; }
+        set { maxBuffSpawnTime = value; }
+    }
 
     void Start()
     {
@@ -46,20 +69,35 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(2f);
             }
             SpawnEnemy();
-            yield return new WaitForSeconds(spawnTime);
+            yield return new WaitForSeconds(Random.Range(_minEnemySpawnTime, _maxEnemySpawnTime));
         }
     }
     void SpawnBuffed()
     {
-        int randomIndex = Random.Range(0, BuffPrefabs.Length);
-        Vector3 spawnPos = new Vector3(Random.Range(14f, -14f), BuffPrefabs[randomIndex].transform.position.y, Random.Range(6f, -15f));
+        int randomIndex = 0;
+        float totalRatio = 0f;
+        foreach (int ratio in BuffRatios)
+        {
+            totalRatio += ratio;
+        }
+        float randomValue = Random.Range(0f, totalRatio);
+        for (int i = 0; i < BuffRatios.Length; i++)
+        {
+            randomValue -= BuffRatios[i];
+            if (randomValue < 0)
+            {
+                randomIndex = i;
+                break;
+            }
+        }
+        Vector3 spawnPos = new Vector3(Random.Range(10f, -10f), BuffPrefabs[randomIndex].transform.position.y, Random.Range(2f, -8f));
         Instantiate(BuffPrefabs[randomIndex], spawnPos, BuffPrefabs[randomIndex].transform.rotation);
     }
     IEnumerator SpawnBuffedEnumerator()
     {
         while (true)
         {
-            yield return new WaitForSeconds(buffTime);
+            yield return new WaitForSeconds(Random.Range(_minBuffSpawnTime, _maxBuffSpawnTime));
             SpawnBuffed();
         }
     }

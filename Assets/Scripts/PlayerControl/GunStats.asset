@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d641a15b4fe74ad42a49a941ab6a0492, type: 3}
   m_Name: GunStats
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
-  fireRate: 5
-  damage: 10
-  fireTime: 2
+  damage: 20
+  fireTime: 1.5
   bulletSpeed: 5

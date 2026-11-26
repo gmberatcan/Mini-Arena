@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PinkEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   speed: 7
-  health: 20
+  health: 40
   damage: 10
   demageInterval: 1
