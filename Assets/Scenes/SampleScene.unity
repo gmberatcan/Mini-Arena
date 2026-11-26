@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   playerController: {fileID: 1061672707}
-  GameOverMenu: {fileID: 375013616}
+  GameOverMenu: {fileID: 1560121361}
 --- !u!1 &1560121361
 GameObject:
   m_ObjectHideFlags: 0

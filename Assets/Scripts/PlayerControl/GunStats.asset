@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunStats
   damage: 20
   fireTime: 1.5
-  bulletSpeed: 5
+  bulletSpeed: 15
