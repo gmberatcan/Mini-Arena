@@ -16,3 +16,4 @@ MonoBehaviour:
   health: 100
   damage: 5
   demageInterval: 1.2
+  scoreValue: 7

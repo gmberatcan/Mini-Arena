@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -5,6 +6,7 @@ using UnityEngine.UIElements;
 public class MoveEnemy : MonoBehaviour
 {
     [SerializeField] private EnemyStats enemyStats;
+    static public event Action<int> OnEnemyDeath;
     private float Health;
     public float _health
     {
@@ -39,7 +41,7 @@ public class MoveEnemy : MonoBehaviour
         if(target != null)
         {
             Vector3 direction = (target.position - transform.position).normalized;
-            enemyRb.MovePosition(transform.position + direction * enemyStats.speed * Time.fixedDeltaTime);
+            enemyRb.linearVelocity = direction * enemyStats.speed;
             /*direction * speed * time = Ne kadar hareket edeceğim?
             position + movement = Yeni pozisyonum ne olacak ?*/
         }
@@ -77,6 +79,7 @@ public class MoveEnemy : MonoBehaviour
     {
         if(_health <= 0)
         {
+            OnEnemyDeath?.Invoke((int)enemyStats.scoreValue);
             Destroy(gameObject);
         }
     }

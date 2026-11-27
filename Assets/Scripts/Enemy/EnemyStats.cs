@@ -7,4 +7,5 @@ public class EnemyStats : ScriptableObject
     public float health;
     public float damage;
     public float demageInterval;
+    public int scoreValue;
 }
