@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbb08b27ca45db408310b3f66547027, type: 3}
   m_Name: RedEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  speed: 3.5
+  speed: 5
   health: 100
   damage: 5
   demageInterval: 1.2

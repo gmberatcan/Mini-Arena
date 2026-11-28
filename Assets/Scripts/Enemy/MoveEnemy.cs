@@ -35,6 +35,7 @@ public class MoveEnemy : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         _health = enemyStats.health;
         UpdateDamageInterval(GameManager.CurrentDifficultyLevel);
+        demageTimer = damageInterval;
     }
 
     // Update is called once per frame
@@ -77,8 +78,11 @@ public class MoveEnemy : MonoBehaviour
     }
     private void TakeDemage()
     {
+        if (demageTimer < damageInterval)
+        {
+            demageTimer += Time.deltaTime;
+        }
         if (player == null) return;
-        demageTimer += Time.deltaTime;
         if (demageTimer >= damageInterval)
         {
             player.TakeDamage(enemyStats.damage);

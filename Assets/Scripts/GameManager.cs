@@ -5,8 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private GameObject StartMenu;
     [SerializeField] private GameObject GameOverMenu;
+    [SerializeField] private GameObject newHighScoreText;
     static public event System.Action<int> OnDifficultyLevelUp;
+    private static bool skipStartMenu = false;
     private bool isGameOver = false;
     public bool _isGameOver
     {
@@ -19,21 +23,56 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CurrentDifficultyLevel = difficultyLevel;
+        if (GameOverMenu != null) GameOverMenu.SetActive(false);
+        if (newHighScoreText != null) newHighScoreText.SetActive(false);
+
+        if (StartMenu != null && !skipStartMenu)
+        {
+            StartMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            if (StartMenu != null) StartMenu.SetActive(false);
+            Time.timeScale = 1f;
+        }
+
+        skipStartMenu = false;
         StartCoroutine(DifficultyLevelUp());
     }
 
     // Update is called once per frame
     void Update()
     {
-        isGameOver=playerController._currentState is DeadState;
-        if (isGameOver)
+        if (!isGameOver && playerController._currentState is DeadState)
         {
-            Time.timeScale = 0f;
-            GameOverMenu.SetActive(true);
+            HandleGameOver();
         }
+    }
+    private void HandleGameOver()
+    {
+        isGameOver = true;
+        Time.timeScale = 0f;
+        if (GameOverMenu != null) GameOverMenu.SetActive(true);
+        if (newHighScoreText != null && scoreManager != null)
+        {
+            newHighScoreText.SetActive(scoreManager.IsNewHighScore);
+        }
+    }
+    public void StartGame()
+    {
+        if (StartMenu != null) StartMenu.SetActive(false);
+        Time.timeScale = 1f;
     }
     public void RestartGame()
     {
+        skipStartMenu = true;
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+    public void ReturnToMainMenu()
+    {
+        skipStartMenu = false;
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }

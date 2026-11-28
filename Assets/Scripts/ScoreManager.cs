@@ -5,13 +5,20 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    private const string HighScoreKey = "HighScore";
+
     private int score;
     public int _score
     {
         get { return score; }
         set { score = value; }
     }
+    private int highScore;
+    public int HighScore => highScore;
+    public bool IsNewHighScore { get; private set; }
+
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
     private void OnEnable()
     {
         MoveEnemy.OnEnemyDeath += AddScore;
@@ -27,7 +34,9 @@ public class ScoreManager : MonoBehaviour
         ScoreTime = 5f;
         addScoreValue = 10;
         _score = 0;
-        scoreText.text = "Score: " + score.ToString();
+        IsNewHighScore = false;
+        highScore = PlayerPrefs.GetInt(HighScoreKey, 0);
+        UpdateScoreUI();
         StartCoroutine(TimeAddScore());
     }
 
@@ -39,7 +48,21 @@ public class ScoreManager : MonoBehaviour
     void AddScore(int AddScore)
     {
         this.score += AddScore;
-        scoreText.text = "Score: " + score.ToString();
+        if (this.score > highScore)
+        {
+            highScore = this.score;
+            IsNewHighScore = true;
+            PlayerPrefs.SetInt(HighScoreKey, highScore);
+            PlayerPrefs.Save();
+        }
+        UpdateScoreUI();
+    }
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+            scoreText.text = "Score: " + score;
+        if (highScoreText != null)
+            highScoreText.text = "High Score: " + highScore;
     }
     IEnumerator TimeAddScore()
     {

@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
     private void SpawnEnemy()
     {
         int randomIndex = Random.Range(0, EnemyPrefabs.Length);
-        float spawnX = Random.Range(0,2)==0 ? Random.Range(-14f, -24f) : Random.Range(14f, 6f);
+        float spawnX = Random.Range(0,2)==0 ? Random.Range(-14f, -19f) : Random.Range(6f, 11f);
         /*float x;
 
         if (Random.Range(0, 2) == 0)
@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour
             x = Random.Range(6f, 16f);
         } yukarıdaki if else ile aynı işlevi görüyor ama daha kısa ve okunaklı bir şekilde yazılmıştır.
         */
-        float spawnZ = Random.Range(0, 2) == 0 ? Random.Range(-25f, -15f) : Random.Range(6f, 16f);
+        float spawnZ = Random.Range(0, 2) == 0 ? Random.Range(-20f, -15f) : Random.Range(6f, 11f);
         Vector3 spawnPos = new Vector3(spawnX, EnemyPrefabs[randomIndex].transform.position.y, spawnZ);
         Instantiate(EnemyPrefabs[randomIndex], spawnPos, EnemyPrefabs[randomIndex].transform.rotation);
     }
