@@ -15,8 +15,10 @@ public class GameManager : MonoBehaviour
     }
     private float difficultyLevelUpTime = 20f;
     private int difficultyLevel = 0;
+    public static int CurrentDifficultyLevel { get; private set; }
     void Start()
     {
+        CurrentDifficultyLevel = difficultyLevel;
         StartCoroutine(DifficultyLevelUp());
     }
 
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
             difficultyLevelUpTime-=2;
             difficultyLevel++;
+            CurrentDifficultyLevel = difficultyLevel;
             OnDifficultyLevelUp?.Invoke(difficultyLevel);
     }
     IEnumerator DifficultyLevelUp()

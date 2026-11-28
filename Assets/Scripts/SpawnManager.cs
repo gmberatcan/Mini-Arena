@@ -111,8 +111,8 @@ public class SpawnManager : MonoBehaviour
     }
     void LevelUpSpawnTime(int level)
     {
-        _minEnemySpawnTime -= 0.8f;
-        _maxEnemySpawnTime -= 0.9f;
+        _minEnemySpawnTime -= 0.9f;
+        _maxEnemySpawnTime -= 1.05f;
         _minBuffSpawnTime -= 0.9f;
         _maxBuffSpawnTime -= 0.9f;
     }
