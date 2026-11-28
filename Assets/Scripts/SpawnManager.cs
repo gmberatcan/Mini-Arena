@@ -14,7 +14,7 @@ public class SpawnManager : MonoBehaviour
         get { return minEnemySpawnTime; }
         set { minEnemySpawnTime=value; }
     }
-    private float maxEnemySpawnTime = 9f;
+    private float maxEnemySpawnTime = 8f;
     public float _maxEnemySpawnTime
     {
         get { return maxEnemySpawnTime; }
@@ -112,7 +112,7 @@ public class SpawnManager : MonoBehaviour
     void LevelUpSpawnTime(int level)
     {
         _minEnemySpawnTime -= 0.8f;
-        _maxEnemySpawnTime -= 0.8f;
+        _maxEnemySpawnTime -= 0.9f;
         _minBuffSpawnTime -= 0.9f;
         _maxBuffSpawnTime -= 0.9f;
     }
