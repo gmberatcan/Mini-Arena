@@ -22,8 +22,15 @@ public class GunSystem : MonoBehaviour
         bulletSpeed = gunStat.bulletSpeed;
         StartCoroutine(FireGun());
     }
+    private void OnEnable()
+    {
+        GameManager.OnDifficultyLevelUp += LevelUpFireTime;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnDifficultyLevelUp -= LevelUpFireTime;
+    }
 
-    
     void Update()
     {
         
@@ -62,4 +69,9 @@ public class GunSystem : MonoBehaviour
         }
         return nearestEnemy;
     }
+    private void LevelUpFireTime(int level)
+    {
+        fireTime -= level*0.05f;
+        damage += level ;
+    }   
 }

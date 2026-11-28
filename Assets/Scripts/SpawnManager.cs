@@ -38,8 +38,16 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnEnemyEnumerator());
         StartCoroutine(SpawnBuffedEnumerator());
     }
+    private void OnEnable()
+    {
+        GameManager.OnDifficultyLevelUp += LevelUpSpawnTime;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnDifficultyLevelUp -= LevelUpSpawnTime;
+    }
 
-    
+
     private void SpawnEnemy()
     {
         int randomIndex = Random.Range(0, EnemyPrefabs.Length);
@@ -100,5 +108,12 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(_minBuffSpawnTime, _maxBuffSpawnTime));
             SpawnBuffed();
         }
+    }
+    void LevelUpSpawnTime(int level)
+    {
+        _minEnemySpawnTime -= 0.8f;
+        _maxEnemySpawnTime -= 0.8f;
+        _minBuffSpawnTime -= 0.9f;
+        _maxBuffSpawnTime -= 0.9f;
     }
 }
